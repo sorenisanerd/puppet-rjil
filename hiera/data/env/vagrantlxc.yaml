@@ -1,0 +1,8 @@
+rjil::jiocloud::etcd::addr: "%{ipaddress}:4001"
+rjil::jiocloud::etcd::peer_addr: "%{ipaddress}:7001"
+db_host: "%{lookup_array_first_element('services::db::eth0')}"
+rjil::db::bind_address: "%{ipaddress}"
+keystone::admin_bind_host: "%{ipaddress}"
+keystone::public_bind_host: "%{ipaddress}"
+rjil::haproxy::openstack::keystone_ips: "%{lookup_array('services::keystone::eth0')}"
+rjil::haproxy::openstack::keystone_internal_ips: "%{lookup_array('services::keystone::eth0')}"
