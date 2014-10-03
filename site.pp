@@ -121,3 +121,14 @@ node /^haproxy\d+/ {
   include rjil::haproxy::openstack
   include rjil::jiocloud::consul::agent
 }
+
+node /jiojenkins/ {
+  include rjil
+  include rjil::jiocloud::jenkins_slave
+
+  realize (
+    Rjil::Localuser['jenkins'],
+    Rjil::Localuser['soren'],
+    Rjil::Localuser['bodepd']
+  )
+}
