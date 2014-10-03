@@ -9,12 +9,18 @@ glance::bind_host: "%{ipaddress_eth1}"
 
 keystone_public_address: "%{lookup_array_first_element('services::controller_load_balancer::eth1')}"
 keystone_private_address: "%{lookup_array_first_element('services::controller_load_balancer::eth1')}"
+
 glance_public_address: "%{lookup_array_first_element('services::controller_load_balancer::eth1')}"
 glance_internal_address: "%{lookup_array_first_element('services::controller_load_balancer::eth1')}"
+
+rjil::jiocloud::etcd::addr: "%{ipaddress_eth1}:4001"
+rjil::jiocloud::etcd::peer_addr: "%{ipaddress_eth1}:7001"
 
 rjil::haproxy::openstack::keystone_ips: "%{lookup_array('services::keystone::eth1')}"
 rjil::haproxy::openstack::keystone_internal_ips: "%{lookup_array('services::keystone::eth1')}"
 rjil::haproxy::openstack::glance_ips: "%{lookup_array('services::glance::eth1')}"
+
+# local address for keystone on controllers
 openstack_extras::auth_file::controller_node: "%{ipaddress_eth1}"
 
 glance::registry::auth_host: "%{hiera('keystone_public_address')}"
@@ -22,5 +28,3 @@ glance::api::auth_host:      "%{hiera('keystone_public_address')}"
 
 rjil::keystone::public_port: 5000
 rjil::keystone::admin_port: 35357
-rjil::jiocloud::etcd::addr: "%{ipaddress_eth1}:4001"
-rjil::jiocloud::etcd::peer_addr: "%{ipaddress_eth1}:7001"

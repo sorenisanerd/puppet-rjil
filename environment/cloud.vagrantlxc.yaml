@@ -1,11 +1,11 @@
 resources:
   etcd:
     number: 1
-  db:
-    number: 1
-  keystone:
-    number: 2
   haproxy:
+    number: 1
+  oc:
+    number: 2
+  ocdb:
     number: 1
   ct:
     number: 1

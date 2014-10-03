@@ -1,4 +1,5 @@
 db_host: "%{lookup_array_first_element('services::db::eth1')}"
+
 rjil::db::bind_address: "%{ipaddress_eth1}"
 
 keystone::admin_bind_host: "%{ipaddress_eth2}"
@@ -9,12 +10,17 @@ glance::bind_host: "%{ipaddress_eth1}"
 
 keystone_public_address: "%{lookup_array_first_element('services::controller_load_balancer::eth1')}"
 keystone_private_address: "%{lookup_array_first_element('services::controller_load_balancer::eth2')}"
+
 glance_public_address: "%{lookup_array_first_element('services::controller_load_balancer::eth1')}"
 glance_internal_address: "%{lookup_array_first_element('services::controller_load_balancer::eth2')}"
+
+rjil::jiocloud::etcd::addr: "%{ipaddress_eth1}:4001"
+rjil::jiocloud::etcd::peer_addr: "%{ipaddress_eth1}:7001"
 
 rjil::haproxy::openstack::keystone_ips: "%{lookup_array('services::keystone::eth1')}"
 rjil::haproxy::openstack::keystone_internal_ips: "%{lookup_array('services::keystone::eth2')}"
 rjil::haproxy::openstack::glance_ips: "%{lookup_array('services::glance::eth1')}"
+
 # local address for keystone on controllers
 # should be eth0 for real deployments, eth1 for vagrant
 # openstack_extras::auth_file::controller_node: "%{ipaddress_eth0}"
