@@ -6,6 +6,21 @@ keystone::public_bind_host: "%{ipaddress_eth0}"
 glance::bind_host: "%{ipaddress_eth0}"
 #glance::registry::bind_host: "%{ipaddress_eth0}"
 
+keystone_public_address: "identity-beta.jiocloud.com"
+keystone_private_address: "identity-beta.jiocloud.com"
+
+glance_public_address: "image-beta.jiocloud.com"
+glance_internal_address: "image-beta.jiocloud.com"
+
+nova_public_address: "compute-beta.jiocloud.com"
+nova_internal_address: "compute-beta.jiocloud.com"
+
+neutron_public_address: "network-beta.jiocloud.com"
+neutron_internal_address: "network-beta.jiocloud.com"
+
+cinder_public_address: "volume-beta.jiocloud.com"
+cinder_internal_address: "volume-beta.jiocloud.com"
+
 rjil::jiocloud::etcd::addr: "%{ipaddress_eth0}:4001"
 rjil::jiocloud::etcd::peer_addr: "%{ipaddress_eth0}:7001"
 
