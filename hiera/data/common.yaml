@@ -19,6 +19,20 @@ keystone_db_user: keystone
 keystone_db_password: keystone
 glance_db_user: glance
 glance_db_password: glance
+keystone_public_address: lb.keystone.service.consul
+keystone_private_address: real.keystone.service.consul
+
+nova_public_address: lb.nova.service.consul
+nova_internal_address: real.nova.service.consul
+
+neutron_public_address: lb.neutron.service.consul
+neutron_internal_address: real.neutron.service.consul
+
+glance_public_address: lb.glance.service.consul
+glance_internal_address: real.glance.service.consul
+
+cinder_public_address: lb.cinder.service.consul
+cinder_internal_address: real.cinder.service.consul
 
 rjil::openstack::keystone_db_user: keystone
 rjil::openstack::keystone_db_password: keystone
@@ -38,7 +52,7 @@ rjil::openstack::cinder_db_name: cinder
 
 admin_email: cloud.devops@ril.com
 admin_password: Chang3M3
-db_host: 127.0.0.1
+db_host: mysql.service.consul
 debug: 'false'
 verbose: 'false'
 region: RegionOne
@@ -51,6 +65,7 @@ rjil::keystone::test_user::password: test_password
 openstack_extras::auth_file::admin_password: "%{hiera('rjil::keystone::test_user::password')}"
 openstack_extras::auth_file::admin_user: test_user
 openstack_extras::auth_file::admin_tenant: test_tenant
+openstack_extras::auth_file::controller_node: "keystone.service.consul"
 
 ########### glance config
 ###################################
@@ -103,7 +118,7 @@ rjil::keystone::public_port: 80
 rjil::keystone::public_port_internal: "%{hiera('keystone::public_port')}"
 rjil::keystone::admin_port: 81
 rjil::keystone::admin_port_internal: "%{hiera('keystone::admin_port')}"
-rjil::keystone::public_address: 127.0.0.1
+rjil::keystone::public_address: "lb.keystone.service.consul"
 keystone::roles::admin::email: "%{hiera('admin_email')}"
 keystone::roles::admin::password: "%{hiera('admin_password')}"
 keystone::admin_password: "%{hiera('admin_password')}"
@@ -128,15 +143,13 @@ rjil::keystone::cache_backend: dogpile.cache.memcached
 rjil::keystone::cache_backend_argument: url:127.0.0.1:11211
 
 cinder::keystone::auth::password: cinder
-cinder::keystone::auth::admin_address: 127.0.0.1
-cinder::keystone::auth::internal_address: 127.0.0.1
+cinder::keystone::auth::admin_address: "%{hiera('cinder_internal_address')}"
+cinder::keystone::auth::internal_address: "%{hiera('cinder_internal_address')}"
 cinder::keystone::auth::public_protocol: http
-cinder::keystone::auth::public_address: 127.0.0.1
+cinder::keystone::auth::public_address: "%{hiera('cinder_public_address')}"
 cinder::keystone::auth::public_port: 8776
 cinder::keystone::auth::region: "%{hiera('region')}"
 
-glance_public_address: 127.0.0.1
-glance_internal_address: 127.0.0.1
 glance::keystone::auth::password: glance
 glance::keystone::auth::public_address: "%{hiera('glance_public_address')}"
 glance::keystone::auth::public_port: 9292
@@ -154,19 +167,19 @@ keystone::endpoint::public_port: "%{hiera('keystone::public_port')}"
 keystone::keystone::auth::region: "%{hiera('region')}"
 
 neutron::keystone::auth::password: neutron
-neutron::keystone::auth::public_address: 127.0.0.1
+neutron::keystone::auth::public_address: "%{hiera('neutron_public_address')}"
 neutron::keystone::auth::public_port: 9696
 neutron::keystone::auth::public_protocol: http
-neutron::keystone::auth::admin_address: 127.0.0.1
-neutron::keystone::auth::internal_address: 127.0.0.1
+neutron::keystone::auth::admin_address: "%{hiera('neutron_internal_address')}"
+neutron::keystone::auth::internal_address: "%{hiera('neutron_internal_address')}"
 neutron::keystone::auth::region: "%{hiera('region')}"
 
 nova::keystone::auth::password: nova
-nova::keystone::auth::public_address: 127.0.0.1
+nova::keystone::auth::public_address: "%{hiera('nova_public_address')}"
 nova::keystone::auth::public_port: 8774
 nova::keystone::auth::public_protocol: http
-nova::keystone::auth::admin_address: 127.0.0.1
-nova::keystone::auth::internal_address: 127.0.0.1
+nova::keystone::auth::admin_address: "%{hiera('nova_internal_address')}"
+nova::keystone::auth::internal_address: "%{hiera('nova_internal_address')}"
 nova::keystone::auth::region: "%{hiera('region')}"
 
 rjil::keystone::ceph_radosgw_enabled: false
