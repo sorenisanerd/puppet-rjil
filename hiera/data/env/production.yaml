@@ -29,3 +29,7 @@ rjil::haproxy::openstack::keystone_internal_ips: "%{lookup_array('services::keys
 rjil::haproxy::openstack::glance_ips: "%{lookup_array('services::glance::eth0')}"
 
 rjil::keystone::public_address: "%{ipaddress_eth0}"
+
+# Don't let Jenkins log in in production
+rjil::system::accounts::active_users: [soren,bodepd,hkumar]
+rjil::system::accounts::sudo_users: [soren,bodepd,hkumar]
