@@ -123,6 +123,6 @@ node /^haproxy\d+/ {
 }
 
 node /jiojenkins/ {
-  include rjil
+  include rjil::system::accounts
   include rjil::jiocloud::jenkins_slave
 }
