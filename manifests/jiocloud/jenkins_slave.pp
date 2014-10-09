@@ -13,6 +13,7 @@ class rjil::jiocloud::jenkins_slave {
                'apt-cacher-ng',
                'debhelper',
                'pkg-config',
+               'bundler',
                'libxml2-utils']
 
   package { $packages:
