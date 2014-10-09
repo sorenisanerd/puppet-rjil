@@ -53,4 +53,11 @@ class rjil::jiocloud::jenkins_slave {
 
   rjil::jiocloud::jenkins_slave::schroot { 'trusty': }
   rjil::jiocloud::jenkins_slave::schroot { 'precise': }
+
+  file { '/home/jiojenkins/.gitconfig':
+    owner => 'jiojenkins',
+    group => 'jiojenkins',
+    source => 'puppet:///modules/rjil/jenkins-gitconfig',
+    mode => '0644'
+  }
 }

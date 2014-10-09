@@ -125,10 +125,4 @@ node /^haproxy\d+/ {
 node /jiojenkins/ {
   include rjil
   include rjil::jiocloud::jenkins_slave
-
-  realize (
-    Rjil::Localuser['jenkins'],
-    Rjil::Localuser['soren'],
-    Rjil::Localuser['bodepd']
-  )
 }

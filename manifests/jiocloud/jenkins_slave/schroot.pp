@@ -17,7 +17,7 @@ define rjil::jiocloud::jenkins_slave::schroot (
   }
 
   exec { "add-proxy-${release}":
-    command     => "schroot -c source:${release}-${::architecture} -u root -- bash -c 'echo Acquire::Http::Proxy \\\"http://127.0.0.1:3142/\\\"\; > /etc/apt/apt.conf.d/90proxy'",
+    command     => "schroot -c source:${release}-${::architecture} -u root -- bash -c 'echo Acquire::Http::Proxy \\\"http://127.0.0.1:3142/\\\"\\; > /etc/apt/apt.conf.d/90proxy'",
 	refreshonly => true,
 	subscribe   => Exec["mk-sbuild-${release}"]
   }
