@@ -3,7 +3,6 @@
 ###################################
 
 rjil::db::mysql_datadir: /data
-rjil::db::mysql_root_pass: 'changeme'
 rjil::db::dbs:
   novadb: { db: "%{hiera('rjil::openstack::nova_db_name')}", user: "%{hiera('rjil::openstack::nova_db_user')}", pass: "%{hiera('rjil::openstack::nova_db_password')}" }
   keystonedb: { db: "%{hiera('rjil::openstack::keystone_db_name')}", user: "%{hiera('rjil::openstack::keystone_db_user')}", pass: "%{hiera('rjil::openstack::keystone_db_password')}" }
@@ -13,15 +12,10 @@ rjil::db::dbs:
 # Gets overridden for ocdb role
 rjil::keystone::disable_db_sync: true
 
-
 ####################################
 ######## Openstack configs #########
 ####################################
 
-keystone_db_user: keystone
-keystone_db_password: keystone
-glance_db_user: glance
-glance_db_password: glance
 keystone_public_address: lb.keystone.service.consul
 keystone_private_address: real.keystone.service.consul
 
@@ -37,24 +31,23 @@ glance_internal_address: real.glance.service.consul
 cinder_public_address: lb.cinder.service.consul
 cinder_internal_address: real.cinder.service.consul
 
-rjil::openstack::keystone_db_user: keystone
-rjil::openstack::keystone_db_password: keystone
+rjil::openstack::keystone_db_user: "%{hiera('keystone_db_user')}"
+rjil::openstack::keystone_db_password: "%{hiera('keystone_db_password')}"
 rjil::openstack::keystone_db_name: keystone
-rjil::openstack::glance_db_user: glance
-rjil::openstack::glance_db_password: glance
+rjil::openstack::glance_db_user: "%{hiera('glance_db_user')}"
+rjil::openstack::glance_db_password: "%{hiera('glance_db_password')}"
 rjil::openstack::glance_db_name: glance
-rjil::openstack::nova_db_user: nova
-rjil::openstack::nova_db_password: nova
+rjil::openstack::nova_db_user: "%{hiera('nova_db_user')}"
+rjil::openstack::nova_db_password: "%{hiera('nova_db_password')}"
 rjil::openstack::nova_db_name: nova
-rjil::openstack::cinder_db_user: cinder
-rjil::openstack::cinder_db_password: cinder
+rjil::openstack::cinder_db_user: "%{hiera('cinder_db_user')}"
+rjil::openstack::cinder_db_password: "%{hiera('cinder_db_password')}"
 rjil::openstack::cinder_db_name: cinder
 
 ########### Openstack Common config
 ###################################
 
 admin_email: cloud.devops@ril.com
-admin_password: Chang3M3
 db_host: mysql.service.consul
 debug: 'false'
 verbose: 'false'
@@ -64,10 +57,12 @@ admin_email: cloud.devops@ril.com
 ########### auth for test user
 ##################################
 
-rjil::keystone::test_user::password: test_password
-openstack_extras::auth_file::admin_password: "%{hiera('rjil::keystone::test_user::password')}"
-openstack_extras::auth_file::admin_user: test_user
-openstack_extras::auth_file::admin_tenant: test_tenant
+rjil::keystone::test_user::username: "%{hiera('test_user_name')}"
+rjil::keystone::test_user::tenant_name: "%{hiera('test_user_tenant')}"
+rjil::keystone::test_user::password: "%{hiera('test_user_password')}"
+openstack_extras::auth_file::admin_user: "%{hiera('test_user_name')}"
+openstack_extras::auth_file::admin_tenant: "%{hiera('test_user_tenant')}"
+openstack_extras::auth_file::admin_password: "%{hiera('test_user_password')}"
 openstack_extras::auth_file::controller_node: "lb.keystone.service.consul"
 
 ########### glance config
@@ -125,7 +120,6 @@ rjil::keystone::public_address: "0.0.0.0"
 keystone::roles::admin::email: "%{hiera('admin_email')}"
 keystone::roles::admin::password: "%{hiera('admin_password')}"
 keystone::admin_password: "%{hiera('admin_password')}"
-keystone::admin_token: token123
 keystone::database_connection: "mysql://keystone:%{hiera('keystone_db_password')}@%{hiera('db_host')}/keystone"
 keystone::debug: "%{hiera('debug')}"
 keystone::verbose: "%{hiera('verbose')}"
@@ -250,9 +244,6 @@ rjil::ceph::public_if: eth0
 ########## Ceph Mon configuration
 ####################################
 rjil::ceph::mon::public_if: "%{hiera('rjil::ceph::public_if')}"
-
-## rjil::ceph::mon::key: ceph mon key
-rjil::ceph::mon::key: 'AQBRSfNSQNCMAxAA/wSNgHmHwzjnl2Rk22P4jA=='
 
 
 ########## Ceph OSD configuration
