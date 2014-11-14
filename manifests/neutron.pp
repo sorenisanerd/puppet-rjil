@@ -109,6 +109,7 @@ class rjil::neutron (
       ensure       => present,
       cidr         => $public_cidr,
       network_name => $public_network_name,
+      before       => Contrail_rt["default-domain:services:${public_network_name}"],
     }
   }
 
@@ -124,10 +125,15 @@ class rjil::neutron (
     require            => Neutron_network[$public_network_name],
   }
 
-  rjil::jiocloud::consul::service { 'neutron':
-    tags      => ['real'],
-    port      => 9696,
-    check_command => "/usr/lib/nagios/plugins/check_http -I 127.0.0.1 -p 9696",
+
+  consul_kv{'neutron/floatingip_pool/status':
+    value   => 'ready',
+    require => Contrail_rt["default-domain:services:${public_network_name}"],
   }
 
+  rjil::jiocloud::consul::service { 'neutron':
+    tags          => ['real'],
+    port          => 9696,
+    check_command => "/usr/lib/nagios/plugins/check_http -I 127.0.0.1 -p 9696",
+  }
 }
