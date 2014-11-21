@@ -3,6 +3,14 @@ public_interface: eth0
 private_address: "%{ipaddress_eth0}"
 private_interface: eth0
 
+rjil::system::proxies:
+  "no":
+    url: "127.0.0.1,169.254.169.254,localhost,consul,jiocloud.com"
+  http:
+    url: "http://10.0.0.13:3128/"
+  https:
+    url: "http://10.0.0.13:3128/"
+
 rjil::ceph::osd::autogenerate: true
 rjil::ceph::osd::autodisk_size: 10
 rjil::ceph::osd::osd_journal_size: 2

@@ -418,7 +418,7 @@ To get a list of support roles that can be booted by vagrant, run:
 vagrant status
 ````
 
-This list is populated using the ./environemnt/full.yaml file by default. It is possible to
+This list is populated using the ./environment/full.yaml file by default. It is possible to
 customize the roles to be populated by adjusting
 
 #### vagrant up
@@ -564,6 +564,14 @@ User to that build process should use to ssh into etcd server.
 
 ````
 ssh\_user=ubuntu
+````
+
+### git_protocol (optional)
+
+Protocol to use when fetching puppet modules. Defaults to `git`.
+
+````
+export git_protocol=https
 ````
 
 ## Example of a full invocation

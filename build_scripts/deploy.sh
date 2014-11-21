@@ -17,8 +17,9 @@ fi
 cat <<EOF >userdata.txt
 #!/bin/bash
 release="\$(lsb_release -cs)"
-export no_proxy="127.0.0.1,localhost,consul,jiocloud.com"
-echo no_proxy="'127.0.0.1,localhost,consul,jiocloud.com'" >> /etc/environment
+export git_protocol="${git_protocol}"
+export no_proxy="127.0.0.1,169.254.169.254,localhost,consul,jiocloud.com"
+echo no_proxy="'127.0.0.1,169.254.169.254,localhost,consul,jiocloud.com'" >> /etc/environment
 if [ -n "${env_http_proxy}" ]
 then
 	export http_proxy=${env_http_proxy}
@@ -31,10 +32,10 @@ then
 	echo ETCD_DISCOVERY_PROXY="'${env_https_proxy}'" >> /etc/environment
 	echo https_proxy="'${env_https_proxy}'" >> /etc/environment
 fi
-wget -O puppet.deb http://apt.puppetlabs.com/puppetlabs-release-\${release}.deb
-wget -O jiocloud.deb http://jiocloud.rustedhalo.com/ubuntu/jiocloud-apt-\${release}.deb
+wget -O puppet.deb -t 2 -T 5 http://apt.puppetlabs.com/puppetlabs-release-\${release}.deb
+wget -O jiocloud.deb -t 2 -T 5 http://jiocloud.rustedhalo.com/ubuntu/jiocloud-apt-\${release}.deb
 dpkg -i puppet.deb jiocloud.deb
-if http_proxy= wget -O internal.deb http://apt.internal.jiocloud.com/internal.deb
+if http_proxy= wget -t 2 -T 5 -O internal.deb http://apt.internal.jiocloud.com/internal.deb
 then
        dpkg -i internal.deb
 fi
