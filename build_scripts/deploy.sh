@@ -16,6 +16,10 @@ fi
 
 cat <<EOF >userdata.txt
 #!/bin/bash
+ntpdate -q 10.0.0.13 >> /timeskew.log
+crontab <<EOF2
+* * * * * ntpdate -q 10.0.0.13 >> /timeskew.log
+EOF2
 release="\$(lsb_release -cs)"
 export git_protocol="${git_protocol}"
 export no_proxy="127.0.0.1,169.254.169.254,localhost,consul,jiocloud.com"
