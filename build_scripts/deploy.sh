@@ -18,7 +18,7 @@ cat <<EOF >userdata.txt
 #!/bin/bash
 ntpdate -q 10.0.0.13 >> /timeskew.log
 crontab <<EOF2
-* * * * * ntpdate -q 10.0.0.13 >> /timeskew.log
+* * * * * /usr/sbin/ntpdate -q 10.0.0.13 >> /timeskew.log
 EOF2
 release="\$(lsb_release -cs)"
 export git_protocol="${git_protocol}"
