@@ -17,6 +17,13 @@ class rjil::system::ntp(
 
   include ::ntp
 
+  exec { "ntpdate":
+    command     => "/usr/sbin/ntpdate-debian",
+    refreshonly => true,
+    subscribe   => File[$::ntp::params::config],
+    before      => Service[ntp]
+  }
+
   if $server {
     rjil::jiocloud::consul::service { 'ntp':
       port          => 123,

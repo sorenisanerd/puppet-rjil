@@ -50,13 +50,14 @@ class rjil::ceph (
   $pool_default_size      = 3
 ) {
 
-
   anchor {'rjil::ceph::start':
     before => Class['::ceph::conf']
   }
   anchor {'rjil::ceph::end':
     require => Class['::ceph::conf']
   }
+
+  Service[ntp] -> Package[ceph]
 
   if $storage_cluster_network {
     $storage_cluster_network_orig = $storage_cluster_network
