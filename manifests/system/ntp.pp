@@ -17,11 +17,12 @@ class rjil::system::ntp(
 
   include ::ntp
 
+  $servers = join($::ntp::servers, ' ')
+
   exec { "ntpdate":
-    command     => "/usr/sbin/ntpdate-debian",
-    refreshonly => true,
-    subscribe   => File[$::ntp::params::config],
-    before      => Service[ntp]
+    command => "/usr/sbin/ntpdate $servers",
+    unless  => '/usr/bin/pkill -0 ntpd',
+    before  => Package[ntp]
   }
 
   if $server {
