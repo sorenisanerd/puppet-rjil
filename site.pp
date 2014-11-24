@@ -143,8 +143,12 @@ node /^oclb\d+/ {
 
 ##
 # compute nodes
+# gcp is a special cp node which is also used as gateway for floating IP access
+# in virtual cloud and vagrant environments. This is not being used in physical
+# environments (staging and production)
+# NOTE: There must be only one gcp node supported at this point of time.
 ##
-node /^cp\d+/ {
+node /^(cp|gcp)\d+/ {
   include rjil::base
   include rjil::ceph
   include rjil::contrail::vrouter

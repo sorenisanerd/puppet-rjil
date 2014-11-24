@@ -13,13 +13,16 @@ class rjil::contrail::vrouter (
 ) {
 
   ##
-  # Added tests
+  # Vgw need floating IP pool to be created before it can successfully created.
+  # Without floating IP vgw is just created, but the routes are not getting added in
+  # the floating IP network VRF properly even after the pool has been added.
+  # Fixing this issue by blocking contrail_vgw creation till a consul k/v
+  # (neutron/floatingip_pool/status) is set. This is set by neutron deployment
+  # code after successful addition of floatingip pool.
   ##
-#  $contrail_tests = ['ifmap.sh','contrail-analytics.sh','contrail-api.sh',
-#                      'contrail-control.sh','contrail-discovery.sh',
-#                      'contrail-dns.sh','contrail-schema.sh',
-#                      'contrail-webui-webserver.sh','contrail-webui-jobserver.sh']
-#  rjil::test {$contrail_tests:}
+
+  ensure_resource( 'consul_kv_blocker', 'neutron/floatingip_pool/status', {tries => 50, try_sleep => 20})
+  Consul_kv_blocker['neutron/floatingip_pool/status'] -> Contrail_vgw<||>
 
   include nova::compute::libvirt
 
