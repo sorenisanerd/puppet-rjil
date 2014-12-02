@@ -36,6 +36,14 @@ class rjil::contrail::vrouter (
     notify => Service['libvirt'],
   }
 
+  file { "/etc/modprobe.d/contrail.conf":
+    ensure => "present",
+    source => 'puppet:///modules/rjil/contrail.mod.conf',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644'
+  } -> Package['contrail-vrouter-dkms']
+
   class {'::contrail::vrouter':
     discovery_ip => $discovery_ip,
     api_ip       => $api_ip,
