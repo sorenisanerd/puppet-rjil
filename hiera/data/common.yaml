@@ -332,6 +332,8 @@ apt::purge_sources_list_d: true
 ## Complete set of sources are added in class rjil::system::apt
 ## Only repos which are added to active_sources are enabled
 
+rustedhalo_apt_repo_release: 'trusty'
+
 rjil::system::apt::enable_puppetlabs: true
 rjil::system::apt::repositories:
   ceph:
@@ -374,7 +376,7 @@ rjil::system::apt::repositories:
       -----END PGP PUBLIC KEY BLOCK-----
   rustedhalo:
     location: 'http://jiocloud.rustedhalo.com/ubuntu/'
-    release: 'trusty'
+    release: "%{hiera('rustedhalo_repo_release')}"
     repos: 'main'
     include_src: false
     key: '85596F7A'
