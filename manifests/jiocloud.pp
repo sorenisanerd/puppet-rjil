@@ -35,6 +35,10 @@ class rjil::jiocloud (
     ensure => present,
   }
 
+  package { 'rjil-cicd':
+    ensure => present,
+  }
+
   file { '/usr/local/bin/jiocloud-update.sh':
     source => 'puppet:///modules/rjil/update.sh',
     mode => '0755',
