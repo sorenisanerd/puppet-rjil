@@ -157,7 +157,7 @@ mod 'puppet-modules/common',
   :ref => 'origin/master'
 
 mod 'solarkennedy/consul',
-  :git => "#{base_url}/solarkennedy/puppet-consul",
+  :git => "#{base_url}/JioCloud/puppet-consul",
   :ref => 'origin/master'
 
 mod 'jiocloud/openstack_zeromq',
