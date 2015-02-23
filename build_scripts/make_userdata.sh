@@ -59,6 +59,14 @@ if [ -n "${puppet_modules_source_repo}" ]; then
     git merge -m 'Merging Pull Request' test_${pull_request_id}
     popd
   fi
+  if [ -n "${module_git_cache}" ]
+  then
+    mkdir modules
+    cd modules
+    wget -O cache.tar.gz "${module_git_cache}"
+    tar xvzf cache.tar.gz
+    cd ..
+  fi
   time gem install librarian-puppet-simple --no-ri --no-rdoc;
   mkdir -p /etc/puppet/manifests.overrides
   cp /tmp/rjil/site.pp /etc/puppet/manifests.overrides/
