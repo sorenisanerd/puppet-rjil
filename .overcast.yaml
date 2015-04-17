@@ -1,3 +1,9 @@
+external:
+  - shell:
+      cmd: "build_scripts/make_userdata.sh"
+  - provision:
+      stack: environment/external.yaml
+      userdata: userdata.txt
 overcloud:
   - shell:
       cmd: "build_scripts/make_userdata.sh"
