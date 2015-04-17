@@ -8,7 +8,7 @@ nodes:
       - network: undercloud
         securitygroups:
         - jumphost
-        - default
+        - undercloud
         assign_floating_ip: true
   haproxy:
     number: 1
@@ -18,7 +18,7 @@ nodes:
     networks:
       - network: undercloud
         securitygroups:
-        - default
+        - undercloud
   oc:
     number: 1
     flavor: oc
@@ -27,7 +27,7 @@ nodes:
     networks:
       - network: undercloud
         securitygroups:
-        - default
+        - undercloud
   ocdb:
     number: 1
     flavor: ocdb
@@ -36,7 +36,7 @@ nodes:
     networks:
       - network: undercloud
         securitygroups:
-        - default
+        - undercloud
         assign_floating_ip: true
   ct:
     number: 1
@@ -46,7 +46,7 @@ nodes:
     networks:
       - network: undercloud
         securitygroups:
-        - default
+        - undercloud
   stmonleader:
     number: 1
     flavor: storage
@@ -55,7 +55,7 @@ nodes:
     networks:
       - network: undercloud
         securitygroups:
-        - default
+        - undercloud
   stmon:
     number: 2
     flavor: storage
@@ -64,7 +64,7 @@ nodes:
     networks:
       - network: undercloud
         securitygroups:
-        - default
+        - undercloud
   st:
     number: 1
     flavor: storage
@@ -73,7 +73,7 @@ nodes:
     networks:
       - network: undercloud
         securitygroups:
-        - default
+        - undercloud
   cp:
     number: 2
     flavor: compute
@@ -82,7 +82,7 @@ nodes:
     networks:
       - network: undercloud
         securitygroups:
-        - default
+        - undercloud
   gcp:
     number: 1
     flavor: compute
@@ -91,7 +91,7 @@ nodes:
     networks:
       - network: undercloud
         securitygroups:
-        - default
+        - undercloud
 networks:
   undercloud:
     cidr: 10.130.182.0/24
