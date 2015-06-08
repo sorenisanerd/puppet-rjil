@@ -66,3 +66,5 @@ fi
 # this is here to allow a user to override the command used for
 # the timeout function just incase it happens to be gtimeout
 timeout=${timeout_command:-timeout}
+
+export override_repo=http://jiocloud.rustedhalo.com:8080/job/pkg_test_build/45/artifact/new_repo.tgz
